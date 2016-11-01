@@ -1,0 +1,12 @@
+#ifndef _MY_TEST_H_
+#define _MY_TEST_H_
+typedef unsigned char UINT8 ;
+
+typedef struct personal_information{
+	char* first_name;
+	char* last_name;
+	UINT8 age;
+	struct personal_information* next;
+} personal_information;
+
+#endif //_MY_TEST_H_

@@ -1,0 +1,129 @@
+#include<stdio.h>
+#include <stdlib.h> 
+#include"../hdr/test.h"
+
+#include <string.h>
+#define INVALID_AGE 0x11
+#define STATISTICAL_AGE_ANAMOLY 0x22
+#define VALID_AGE 0x33
+#define UNDER_AGE 0x44
+
+personal_information *head = (personal_information *) NULL;
+personal_information *end = (personal_information *) NULL;
+
+personal_information* initnode( const char *first_name, const char *last_name, const UINT8 age )
+{
+   personal_information *info;
+   info = (personal_information *) calloc( 1, sizeof(personal_information) );
+   if( info != NULL )                       /* error allocating node?      */
+    {   
+		info->first_name = (char*)first_name;
+		info->last_name = (char*)last_name;
+		info->age = (UINT8)age;
+	                               /* allocated node successfully */
+       
+   }
+	return info;
+}
+
+/*UINT8 add(personal_information* new )  /* adding to end of list *
+{
+   /*if( head == NULL )      /* if there are no nodes in list, then         *
+       head = new;         /* set head to this new node                   *
+   end->next = new;        /* link in the new node to the end of the list *
+   new->next = NULL;       /* set next field to signify the end of list   *
+   end = new;              /* adjust end to point to the last node        *
+}
+*/
+UINT8 add_to_list(personal_information* item){
+	if(head == NULL){
+		head = item;
+		//head->next=end;
+		printf("name = %s \n", head->first_name);
+	}else {
+	end->next = item;
+	item->next=NULL;
+	end = item;
+	printf("name = %s \n", head->first_name);
+	}
+	//item->next = NULL;
+	//end = item;
+
+}
+personal_information* deep_copy(const personal_information* original)
+{
+	personal_information* clone;
+	printf("Original value %s \n", original->first_name);
+	clone = (personal_information *) calloc( 1, sizeof(personal_information) );
+	if (clone!=NULL)
+	{
+		clone->first_name = original->first_name;
+		clone->last_name = original->last_name;
+		clone->age = original->age;
+
+	}
+	printf("Clone value %s \n", clone->first_name);
+	return clone;
+}
+
+UINT8 process_age(const UINT8 age)
+{
+	UINT8 age_status = INVALID_AGE;	
+	
+	
+	if(age<13){
+		age_status = UNDER_AGE;
+	}
+	else if(age>110){
+		age_status = STATISTICAL_AGE_ANAMOLY;
+	}
+	else{
+		age_status = VALID_AGE;
+	
+	}
+	
+	return age_status;
+}
+
+int main()
+{
+		printf("PASS 0");	
+	//char* data = (char*)"iuyiuyiu";	
+	personal_information *info;
+	//info = (personal_information *) calloc( 1, sizeof(personal_information) );
+	//info->first_name = (char*)"John";
+	//info->last_name = (char*)"Doe";
+	//info->age = (UINT8)22;
+	printf("PASS 1");
+ 	info = initnode( "John", "Doe", 22 );
+	printf("PASS 2");
+	personal_information *new_info;
+	new_info = (personal_information *) calloc( 1, sizeof(personal_information) );
+	new_info->first_name = (char*)"Jane";
+	new_info->last_name = (char*)"Doe";
+	new_info->age = (UINT8)22;
+	
+	deep_copy(info);
+	printf("PASS 3");
+	add_to_list( info );
+	printf("PASS 4");
+	add_to_list( new_info );
+//	printlist( head );
+	UINT8 function_status = 0;
+	// UNIT TEST 1 for AGE 13
+	function_status = process_age(13);
+	if (function_status == VALID_AGE){
+		printf("PROCESS AGE OUTPUT SUCCESS 13 \n" );
+	}
+	function_status = process_age(110);
+	if (function_status == VALID_AGE){
+		printf("PROCESS AGE OUTPUT SUCCESS 110 \n" );
+	}
+	function_status = process_age(9);
+	if (function_status == UNDER_AGE){
+		printf("PROCESS AGE OUTPUT SUCCESS 9 \n" );
+	}
+
+	return 0;
+}
+

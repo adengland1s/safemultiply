@@ -1,0 +1,15 @@
+#include<stdio.h>
+#include"../hdr/test.h"
+
+void process(char* data)
+{
+	printf("Data Got = %s \n", data);
+}
+
+int main()
+{
+	char* data = "iuyiuyiu";	
+	process(data);
+	return 0;
+}
+
